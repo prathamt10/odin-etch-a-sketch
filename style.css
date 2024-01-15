@@ -23,8 +23,7 @@ body {
     gap: 20px;
 }
 
-.toggle {
-    display: flex;
-    align-items: center;
-    gap: 3px;
+.toggle-on {
+    background-color: #676666;
+    border-color: #676666;
 }

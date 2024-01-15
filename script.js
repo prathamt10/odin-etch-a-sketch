@@ -27,7 +27,7 @@ function draw(square) {
     if (isRandomizerOn) {
         draw_color = `rgb(${getRandomRGB()},${getRandomRGB()},${getRandomRGB()})`;
     }
-    
+
     square.style.backgroundColor = draw_color;
 
     if (isShaderOn) {
@@ -87,6 +87,9 @@ clear_button.addEventListener('click', () => {
     if (isShaderOn) {
         shading_button.click();
     }
+    if (isEraserOn) {
+        eraser_button.click();
+    }
 });
 
 const grid_size = document.querySelector('#sizes');
@@ -98,50 +101,50 @@ grid_size.addEventListener('change', (e) => {
 const randomize_button = document.querySelector('.randomize');
 randomize_button.addEventListener('click', () => {
     if (!isRandomizerOn) {
-        isRandomizerOn = true;
-        randomize_button.textContent = 'Off';
-
         if (isEraserOn) {
             eraser_button.click();
         }
+
+        isRandomizerOn = true;
+        randomize_button.classList.add('toggle-on');
     } else {
         isRandomizerOn = false;
         draw_color = 'black';
-        randomize_button.textContent = 'On';
+        randomize_button.classList.remove('toggle-on');
     }
 });
 
 const shading_button = document.querySelector(".shading");
 shading_button.addEventListener('click', () => {
     if (!isShaderOn) {
-        isShaderOn = true;
-        shading_button.textContent = 'Off';
-
         if (isEraserOn) {
             eraser_button.click();
         }
+
+        isShaderOn = true;
+        shading_button.classList.add('toggle-on');
     } else {
         isShaderOn = false;
-        shading_button.textContent = 'On';
+        shading_button.classList.remove('toggle-on');
     }
 });
 
 const eraser_button = document.querySelector(".eraser");
 eraser_button.addEventListener('click', () => {
     if (!isEraserOn) {
-        isEraserOn = true;
-        draw_color = 'white';
-        eraser_button.textContent = 'Off';
-
         if (isRandomizerOn) {
             randomize_button.click();
         }
         if (isShaderOn) {
             shading_button.click();
         }
+
+        isEraserOn = true;
+        draw_color = 'white';
+        eraser_button.classList.add('toggle-on');
     } else {
         isEraserOn = false;
         draw_color = 'black';
-        eraser_button.textContent = 'On';
+        eraser_button.classList.remove('toggle-on');
     }
 })
