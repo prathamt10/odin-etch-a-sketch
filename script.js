@@ -2,6 +2,8 @@ const DIMENSION = 768;
 let isMouseButtonPressed = false;
 let draw_color = 'black';
 let isRandomizerOn = false;
+let isShaderOn = false;
+let square_opacities = new Map();
 
 function startDraw(square) {
     isMouseButtonPressed = true;
@@ -25,6 +27,15 @@ function draw(square) {
         draw_color = `rgb(${getRandomRGB()},${getRandomRGB()},${getRandomRGB()})`;
     }
     square.style.backgroundColor = draw_color;
+
+    if (isShaderOn) {
+        let opacity = square_opacities.get(square);
+        if (opacity < 1) {
+            opacity += 0.1
+            square.style.opacity = `${opacity}`;
+            square_opacities.set(square, opacity);
+        }
+    }
 }
 
 function createSquares(count) {
@@ -41,9 +52,11 @@ function createSquares(count) {
             square.style.width = `${size}px`;
             square.style.height = `${size}px`;
             square.style.border = '1px solid black';
+            
+            square_opacities.set(square, 0.1);
 
             square.addEventListener('mousedown', (e) => { startDraw(e.target) });
-            square.addEventListener('mousemove', (e) => { draw(e.target) });
+            square.addEventListener('mouseenter', (e) => { draw(e.target) });
             square.addEventListener('mouseup', (e) => { endDraw(e.target) });
 
             row.appendChild(square);
@@ -60,7 +73,19 @@ clear_button.addEventListener('click', () => {
     const squares = document.querySelectorAll('.squares');
     squares.forEach((square) => {
         square.style.backgroundColor = 'white';
+        square.style.border = '1px solid black';
+        square.style.opacity = 1;
     })
+
+    square_opacities.clear();
+
+    // change the toggles back to off
+    isRandomizerOn = false;
+    draw_color = 'black';
+    randomize_button.textContent = 'On';
+
+    isShaderOn = false;
+    shading_button.textContent = 'On';
 });
 
 const grid_size = document.querySelector('#sizes');
@@ -78,5 +103,16 @@ randomize_button.addEventListener('click', () => {
         isRandomizerOn = false;
         draw_color = 'black';
         randomize_button.textContent = 'On';
+    }
+});
+
+const shading_button = document.querySelector(".shading");
+shading_button.addEventListener('click', () => {
+    if (!isShaderOn) {
+        isShaderOn = true;
+        shading_button.textContent = 'Off';
+    } else {
+        isShaderOn = false;
+        shading_button.textContent = 'On';
     }
 });
