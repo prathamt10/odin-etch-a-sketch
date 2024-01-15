@@ -1,6 +1,7 @@
 const DIMENSION = 768;
 let isMouseButtonPressed = false;
 let draw_color = 'black';
+let isRandomizerOn = false;
 
 function startDraw(square) {
     isMouseButtonPressed = true;
@@ -12,9 +13,16 @@ function endDraw(square) {
     isMouseButtonPressed = false;
 }
 
+function getRandomRGB() {
+    return Math.floor(Math.random() * 256);
+}
+
 function draw(square) {
     if (!isMouseButtonPressed) {
         return;
+    }
+    if (isRandomizerOn) {
+        draw_color = `rgb(${getRandomRGB()},${getRandomRGB()},${getRandomRGB()})`;
     }
     square.style.backgroundColor = draw_color;
 }
@@ -59,4 +67,16 @@ const grid_size = document.querySelector('#sizes');
 grid_size.addEventListener('change', (e) => {
     sketchpad.innerHTML = "";
     createSquares(parseInt(e.target.value));
+});
+
+const randomize_button = document.querySelector('.randomize');
+randomize_button.addEventListener('click', () => {
+    if (!isRandomizerOn) {
+        isRandomizerOn = true;
+        randomize_button.textContent = 'Off';
+    } else {
+        isRandomizerOn = false;
+        draw_color = 'black';
+        randomize_button.textContent = 'On';
+    }
 });

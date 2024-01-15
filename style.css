@@ -22,3 +22,9 @@ body {
     display: flex;
     gap: 20px;
 }
+
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
