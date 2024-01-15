@@ -6,8 +6,19 @@
     <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-    <h1 style="color: azure; font-family: Arial, Helvetica, sans-serif;">Etch-A-Sketch</h1>
+    <h1>Etch-A-Sketch</h1>
     <div class="sketchpad"></div>
+    <div class="options">
+        <div>
+            <label for="sizes">Choose grid size:</label>
+            <select name="sizes" id="sizes">
+              <option value="16" selected>16x16</option>
+              <option value="32">32x32</option>
+              <option value="64">64x64</option>
+            </select>
+        </div>
+        <button class="clear">Clear</button>
+    </div>
     <script src="./script.js"></script>
 </body>
 </html>

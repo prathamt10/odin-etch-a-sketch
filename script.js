@@ -15,7 +15,7 @@ function draw(square) {
     if (!isMouseHolding) {
         return;
     }
-    square.classList.add('selected');
+    square.style.backgroundColor = 'black';
 }
 
 function createSquares(count) {
@@ -25,6 +25,7 @@ function createSquares(count) {
         row.style.display = 'flex';
         for (let j = 0; j < count; j++) {
             const square = document.createElement('div');
+            square.className = 'squares';
             square.style.boxSizing = 'border-box';
             square.style.width = `${size}px`;
             square.style.height = `${size}px`;
@@ -39,4 +40,18 @@ function createSquares(count) {
 }
 
 const sketchpad = document.querySelector(".sketchpad");
-createSquares(32);
+createSquares(16);
+
+const clear_button = document.querySelector(".clear");
+clear_button.addEventListener('click', () => {
+    const squares = document.querySelectorAll('.squares');
+    squares.forEach((square) => {
+        square.style.backgroundColor = 'white';
+    })
+});
+
+const change_grid_size = document.querySelector('#sizes');
+change_grid_size.addEventListener('change', (e) => {
+    sketchpad.replaceChildren();
+    createSquares(parseInt(e.target.value));
+})
