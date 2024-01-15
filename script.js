@@ -3,6 +3,7 @@ let isMouseButtonPressed = false;
 let draw_color = 'black';
 let isRandomizerOn = false;
 let isShaderOn = false;
+let isEraserOn = false;
 let square_opacities = new Map();
 
 function startDraw(square) {
@@ -26,6 +27,7 @@ function draw(square) {
     if (isRandomizerOn) {
         draw_color = `rgb(${getRandomRGB()},${getRandomRGB()},${getRandomRGB()})`;
     }
+    
     square.style.backgroundColor = draw_color;
 
     if (isShaderOn) {
@@ -79,13 +81,12 @@ clear_button.addEventListener('click', () => {
 
     square_opacities.clear();
 
-    // change the toggles back to off
-    isRandomizerOn = false;
-    draw_color = 'black';
-    randomize_button.textContent = 'On';
-
-    isShaderOn = false;
-    shading_button.textContent = 'On';
+    if (isRandomizerOn) {
+        randomize_button.click();
+    }
+    if (isShaderOn) {
+        shading_button.click();
+    }
 });
 
 const grid_size = document.querySelector('#sizes');
@@ -99,6 +100,10 @@ randomize_button.addEventListener('click', () => {
     if (!isRandomizerOn) {
         isRandomizerOn = true;
         randomize_button.textContent = 'Off';
+
+        if (isEraserOn) {
+            eraser_button.click();
+        }
     } else {
         isRandomizerOn = false;
         draw_color = 'black';
@@ -111,8 +116,32 @@ shading_button.addEventListener('click', () => {
     if (!isShaderOn) {
         isShaderOn = true;
         shading_button.textContent = 'Off';
+
+        if (isEraserOn) {
+            eraser_button.click();
+        }
     } else {
         isShaderOn = false;
         shading_button.textContent = 'On';
     }
 });
+
+const eraser_button = document.querySelector(".eraser");
+eraser_button.addEventListener('click', () => {
+    if (!isEraserOn) {
+        isEraserOn = true;
+        draw_color = 'white';
+        eraser_button.textContent = 'Off';
+
+        if (isRandomizerOn) {
+            randomize_button.click();
+        }
+        if (isShaderOn) {
+            shading_button.click();
+        }
+    } else {
+        isEraserOn = false;
+        draw_color = 'black';
+        eraser_button.textContent = 'On';
+    }
+})
