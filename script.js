@@ -55,7 +55,7 @@ function createSquares(count) {
             square.style.height = `${size}px`;
             square.style.border = '1px solid black';
             
-            square_opacities.set(square, 0.1);
+            square_opacities.set(square, 0);
 
             square.addEventListener('mousedown', (e) => { startDraw(e.target) });
             square.addEventListener('mouseenter', (e) => { draw(e.target) });
